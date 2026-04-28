@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# Local data / cache
+/tmp/
+.cache/
+
+# Internal dispatch artifacts (not for publication)
+_DISPATCH_RESULTS.md

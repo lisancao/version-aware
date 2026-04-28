@@ -1,0 +1,12 @@
+{
+  "name": "staleness-guard",
+  "description": "Detects and mitigates knowledge staleness in AI-generated architectural recommendations. Checks installed library versions against the model's training cutoff and flags potentially outdated claims.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Lisa Cao",
+    "url": "https://github.com/lisancao"
+  },
+  "repository": "https://github.com/lisancao/staleness-guard",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/lisancao/staleness-guard"
+}
