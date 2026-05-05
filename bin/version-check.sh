@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# version-check.sh — staleness-guard PreToolUse hook
+# version-check.sh — version-aware PreToolUse hook
 # Checks installed library versions against training cutoff map.
 # Outputs warnings ONLY when version gaps are found. Silent when clean.
 #
@@ -11,7 +11,7 @@
 set -uo pipefail
 
 CACHE_TTL_SEC=60
-CACHE_DIR="${TMPDIR:-/tmp}/staleness-guard-$(id -u)"
+CACHE_DIR="${TMPDIR:-/tmp}/version-aware-$(id -u)"
 mkdir -p "$CACHE_DIR" 2>/dev/null
 
 # ---------------------------------------------------------------------------
@@ -203,7 +203,7 @@ fi
 
 if [ ${#WARNINGS[@]} -gt 0 ]; then
   echo ""
-  echo "STALENESS WARNING (staleness-guard):"
+  echo "STALENESS WARNING (version-aware):"
   for w in "${WARNINGS[@]}"; do
     echo "$w"
   done

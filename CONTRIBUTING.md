@@ -1,4 +1,4 @@
-# Contributing to staleness-guard
+# Contributing to version-aware
 
 The cutoff map in `bin/version-check.sh` is the product. The code is scaffolding. The single most useful contribution is keeping that map accurate and expanding its coverage.
 
@@ -12,13 +12,13 @@ The cutoff map in `bin/version-check.sh` is the product. The code is scaffolding
    ```
 
 3. If the library is in the Node.js ecosystem, add it to the `NODE_CUTOFFS` heredoc with the same format, but read from `package.json` semantics (typically just `<major>` for things like react/express).
-4. Add the library token to the `LIBRARY_NAMES` set in `bin/staleness-scan.py` so the scanner's library-name gate recognizes it.
+4. Add the library token to the `LIBRARY_NAMES` set in `bin/scan.py` so the scanner's library-name gate recognizes it.
 5. Run the tests: `tests/run.sh`. They should still pass.
 6. Open a PR.
 
 ## Adding a new claim pattern to the scanner
 
-Patterns live in `bin/staleness-scan.py` under the `PATTERNS` list. Each entry is a 4-tuple: `(regex, risk_level, claim_type, rationale)`.
+Patterns live in `bin/scan.py` under the `PATTERNS` list. Each entry is a 4-tuple: `(regex, risk_level, claim_type, rationale)`.
 
 Rules of thumb for new patterns:
 
@@ -34,7 +34,7 @@ A plugin format change can silently break things. Before merging:
 1. `tests/run.sh` should pass.
 2. `cat .claude-plugin/plugin.json | python3 -c 'import json,sys; json.load(sys.stdin)'` should not error.
 3. `cat hooks/hooks.json | python3 -c 'import json,sys; json.load(sys.stdin)'` should not error.
-4. Install the plugin locally (`/plugin install file:///path/to/staleness-guard`) and verify the hook fires by running any Bash tool and watching for the `STALENESS WARNING` block when a flagged version is installed.
+4. Install the plugin locally (`/plugin install file:///path/to/version-aware`) and verify the hook fires by running any Bash tool and watching for the `STALENESS WARNING` block when a flagged version is installed.
 
 ## Things this project will not accept
 

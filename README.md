@@ -1,4 +1,4 @@
-# staleness-guard
+# version-aware
 
 > **Status: prototype (v0.1).** API surface and pattern catalog will iterate based on real-world usage. Apache 2.0 licensed. PRs welcome.
 
@@ -20,7 +20,7 @@ This is not a hallucination problem. The model's claim was accurate, for the ver
 
 ---
 
-## What staleness-guard Does
+## What version-aware Does
 
 The plugin operates at three layers:
 
@@ -36,7 +36,7 @@ Layer 2: Pre-execution hook (HOOK)
     warnings when installed versions exceed training coverage.
 
 Layer 3: Post-generation scanner (CLI TOOL)
-  ↓ Pipe agent output through staleness-scan.py to identify
+  ↓ Pipe agent output through scan.py to identify
     high-risk claim patterns: capability absence claims,
     processing model claims, competitive comparisons,
     latency ceilings, default behavior claims.
@@ -56,7 +56,7 @@ Fires when you ask architectural or comparative questions. Triggers a structured
 
 Runs automatically before every Bash tool execution. Reads `requirements.txt`, `pyproject.toml`, `package.json`, or `Cargo.toml`, checks installed versions of ~20 key data/ML libraries against a conservative cutoff map, and emits a warning block when gaps are found. **Silent when no gaps exist**: zero noise when you're working with well-covered library versions.
 
-### Component 3: `staleness-scan.py`
+### Component 3: `scan.py`
 
 A standalone stdin scanner you can pipe any text through. Identifies 15+ claim pattern types sorted by staleness risk:
 - 🔴 HIGH: capability absence, processing model, latency ceiling, competitive comparison
@@ -70,20 +70,20 @@ CI-friendly: exits with code 1 if HIGH-risk findings are present.
 ## Installation
 
 ```bash
-git clone https://github.com/lisancao/staleness-guard ~/.claude/plugins/staleness-guard
+git clone https://github.com/lisancao/version-aware ~/.claude/plugins/version-aware
 ```
 
 Or use Claude Code's plugin install command pointed at a local clone:
 ```bash
-git clone https://github.com/lisancao/staleness-guard
-/plugin install file://$(pwd)/staleness-guard
+git clone https://github.com/lisancao/version-aware
+/plugin install file://$(pwd)/version-aware
 ```
 
 Verify installation by running any Bash tool. If you have flagged libraries installed, you'll see a `STALENESS WARNING` block. If not, the hook is silent (by design).
 
 To run the test suite:
 ```bash
-cd staleness-guard && tests/run.sh
+cd version-aware && tests/run.sh
 ```
 
 ---
@@ -138,13 +138,13 @@ Just ask architectural questions normally. The skill fires on keywords like "sho
 ### Manual scan
 ```bash
 # Scan agent output for staleness risks
-cat agent_response.txt | python3 bin/staleness-scan.py
+cat agent_response.txt | python3 bin/scan.py
 
 # In-line
-echo "Spark cannot achieve sub-second latency" | python3 bin/staleness-scan.py
+echo "Spark cannot achieve sub-second latency" | python3 bin/scan.py
 
 # As a CI check (exits 1 on HIGH findings)
-generate_recommendations.sh | python3 bin/staleness-scan.py || echo "Staleness review required"
+generate_recommendations.sh | python3 bin/scan.py || echo "Staleness review required"
 ```
 
 ### Manual version check
@@ -170,7 +170,7 @@ delta-spark 2.4
 - Libraries not yet in the map (especially JVM ecosystem: Scala libs, Java frameworks)
 - Cutoff updates when current entries fall behind
 - Node.js, Rust, Go ecosystem maps with proper version comparison
-- staleness-scan.py pattern tuning (more claim types, fewer false positives)
+- scan.py pattern tuning (more claim types, fewer false positives)
 - Flink detection (hard via pip; PyFlink ships as `apache-flink`, not `flink`)
 
 Open a PR. The map is the product. The code is scaffolding.
@@ -186,7 +186,7 @@ Open a PR. The map is the product. The code is scaffolding.
 
 The Databricks ecosystem moves fast. Delta Lake 3.x changed the transaction log format. Unity Catalog changed how you reference tables. Spark 4.0 changed the execution model. MLflow 2.x broke several API patterns from 1.x. DBT 1.5 introduced model contracts.
 
-If you use AI coding assistants in a Databricks environment (and you do), you're routinely asking questions about libraries where major releases have happened since the model's training cutoff. The model doesn't flag this. It answers confidently. staleness-guard makes the gap visible so you can make informed decisions instead of discovering the problem in production.
+If you use AI coding assistants in a Databricks environment (and you do), you're routinely asking questions about libraries where major releases have happened since the model's training cutoff. The model doesn't flag this. It answers confidently. version-aware makes the gap visible so you can make informed decisions instead of discovering the problem in production.
 
 ---
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# tests/run.sh: run all staleness-guard tests
+# tests/run.sh: run all version-aware tests
 set -uo pipefail
 
 DIR="$(cd "$(dirname "$0")" && pwd)"

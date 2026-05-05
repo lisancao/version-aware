@@ -131,10 +131,10 @@ Write normally. You can be confident.
 
 ## Step 6: Self-scan with the staleness scanner
 
-Before emitting your answer, pipe your draft through `staleness-scan.py` and address any HIGH-risk findings. This catches stale claims you missed.
+Before emitting your answer, pipe your draft through `scan.py` and address any HIGH-risk findings. This catches stale claims you missed.
 
 ```bash
-echo "<your draft answer>" | python3 ${CLAUDE_PLUGIN_ROOT:-./}/bin/staleness-scan.py
+echo "<your draft answer>" | python3 ${CLAUDE_PLUGIN_ROOT:-./}/bin/scan.py
 ```
 
 If the scanner reports HIGH findings:

@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# tests/test_scanner.sh: regression tests for staleness-scan.py
+# tests/test_scanner.sh: regression tests for scan.py
 # Run from any directory; uses absolute path to scanner.
 set -uo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-SCAN="python3 $ROOT/bin/staleness-scan.py"
+SCAN="python3 $ROOT/bin/scan.py"
 
 PASS=0
 FAIL=0
@@ -43,7 +43,7 @@ assert_exit_code() {
   fi
 }
 
-echo "=== staleness-scan.py regression tests ==="
+echo "=== scan.py regression tests ==="
 echo
 
 # Canonical Spark example: 4 HIGH-risk findings

@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """
-staleness-scan.py: staleness-guard Layer 3 scanner
+scan.py: version-aware Layer 3 scanner
 
 Reads text from stdin (pipe agent output into this) and identifies claims
 that are high-risk for LLM knowledge staleness. Uses regex heuristics only;
 stdlib, no dependencies, fast.
 
 Usage:
-    echo "Spark uses micro-batches and cannot achieve sub-second latency" | python3 staleness-scan.py
-    cat agent_output.txt | python3 staleness-scan.py
-    python3 staleness-scan.py < output.txt
+    echo "Spark uses micro-batches and cannot achieve sub-second latency" | python3 scan.py
+    cat agent_output.txt | python3 scan.py
+    python3 scan.py < output.txt
 
 Exit codes:
     0: no staleness risks found
@@ -330,8 +330,8 @@ def print_summary(findings: List[Finding]) -> None:
 
 def main() -> int:
     if sys.stdin.isatty():
-        print("Usage: echo '<text>' | python3 staleness-scan.py", file=sys.stderr)
-        print("       cat output.txt | python3 staleness-scan.py", file=sys.stderr)
+        print("Usage: echo '<text>' | python3 scan.py", file=sys.stderr)
+        print("       cat output.txt | python3 scan.py", file=sys.stderr)
         return 1
 
     text = sys.stdin.read()
